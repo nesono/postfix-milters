@@ -20,4 +20,5 @@ mkdir -p /var/spool/postfix/${POSTGREY_SOCKET_PATH%/*}
 mkdir -p /var/spool/postfix/${SPAMASS_SOCKET_PATH%/*}
 mkdir -p /var/spool/postfix/${DKIM_SOCKET_PATH%/*}
 
+chmod -R a+rw /var/spool/postfix
 exec supervisord -c /etc/supervisord.conf
