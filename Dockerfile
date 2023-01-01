@@ -6,17 +6,17 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     bash  \
     rsyslog \
     postgrey  \
+    spamassassin \
     spamass-milter  \
     opendmarc  \
     opendkim  \
     supervisor  \
-    netcat  \
-    && \
-    rm -rf /var/lib/apt/lists/* \
-    && \
-    mkdir -p /var/spool/postfix
+    netcat && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/spool/postfix && \
+    mkdir -p /vhome/users/
 
-VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys" ]
+VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users" ]
 
 COPY scripts/* /scripts/
 COPY configs/* /etc/

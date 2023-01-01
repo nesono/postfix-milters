@@ -9,9 +9,9 @@ noop() {
     done
 }
 
-if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then
-  exec /usr/sbin/postgrey --unix="/var/spool/postfix/${POSTGREY_SOCKET_PATH}"
+if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then
+  exec /usr/sbin/spamass-milter -r 15 -p "/var/spool/postfix/${SPAMASS_SOCKET_PATH}"
 else
-  echo "Not running postgrey, since socket is disabled"
+  echo "Not running spamass-milter, since socket is disabled"
   noop
 fi
