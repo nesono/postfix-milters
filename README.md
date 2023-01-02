@@ -16,3 +16,4 @@ Make sure to mount the following volumes for each corresponding service:
 * `/var/spool/postfix` - required for milter to postfix communication
 * `/etc/opendkim/keys` - required if opendkim is used
 * `/vhome/users/` - persisting learned Spam data
+* `/var/mail` - the main folder containing all mailboxes for all users for learning from Junk folders

@@ -14,12 +14,14 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     netcat && \
     rm -rf /var/lib/apt/lists/*
 
-# TODO: spamass-milter:spamass-milter here needs to be the same as postfix:postfix in the postfix container
 RUN mkdir -p /var/spool/postfix && \
     mkdir -p /vhome/users/ && \
-    chown -R spamass-milter:spamass-milter /vhome/users
+    chown -R debian-spamd:debian-spamd /vhome/users
 
-VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users" ]
+# Add user spamass-milter to debian-spamd, to access the user spam databases below `/vhome`
+RUN usermod -aG debian-spamd spamass-milter
+
+VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users", "/var/mail" ]
 
 COPY scripts/* /scripts/
 COPY configs/* /etc/
