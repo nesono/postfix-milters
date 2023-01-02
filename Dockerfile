@@ -12,15 +12,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     opendkim  \
     supervisor  \
     netcat && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/spool/postfix && \
-    chown -R postfix:postfix /var/run/postfix && \
+    rm -rf /var/lib/apt/lists/*
+
+# TODO: spamass-milter:spamass-milter here needs to be the same as postfix:postfix in the postfix container
+RUN mkdir -p /var/spool/postfix && \
+    chown -R spamass-milter:spamass-milter /var/spool/postfix && \
     mkdir -p /vhome/users/ && \
-    groupadd -g 101 postfix && \
-    useradd -u 101 -g 102 postfix -d /var/run/postfix && \
-    passwd -l vmail && \
-    mkdir -p /var/run/postfix && \
-    chown -R postfix:postfix /var/run/postfix
+    chown -R spamass-milter:spamass-milter /vhome/users
 
 VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users" ]
 
