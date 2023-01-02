@@ -14,7 +14,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/spool/postfix && \
-    mkdir -p /vhome/users/
+    chown -R postfix:postfix /var/run/postfix && \
+    mkdir -p /vhome/users/ && \
+    groupadd -g 101 postfix && \
+    useradd -u 101 -g 102 postfix -d /var/run/postfix && \
+    passwd -l vmail && \
+    mkdir -p /var/run/postfix && \
+    chown -R postfix:postfix /var/run/postfix
 
 VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users" ]
 

@@ -14,6 +14,6 @@ noop() {
 if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then
   exec /usr/sbin/spamd --max-children=5 -u debian-spamd --virtual-config-dir=/vhome/users/%u/spamassassin
 else
-  echo "Not running Spamd, since spamass is diabled"
+  echo "INFO: Not running Spamd, since spamass is diabled"
   noop
 fi
