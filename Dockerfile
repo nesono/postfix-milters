@@ -16,7 +16,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
 
 # TODO: spamass-milter:spamass-milter here needs to be the same as postfix:postfix in the postfix container
 RUN mkdir -p /var/spool/postfix && \
-    chown -R spamass-milter:spamass-milter /var/spool/postfix && \
     mkdir -p /vhome/users/ && \
     chown -R spamass-milter:spamass-milter /vhome/users
 
