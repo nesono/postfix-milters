@@ -1,5 +1,4 @@
 #!/bin/bash
-# TODO: enable this before push
 set -o errexit -o pipefail -o nounset
 
 # script to create a directory under /vhome/users for each mail account,
@@ -18,17 +17,21 @@ while true; do
       junkfolder="${dir}/.Junk"
       if [ -d "${junkfolder}" ]; then
         echo "sa_learn: Learning Spam from ${junkfolder} for user ${mailaccount}"
-        sa-learn --spam --dbpath "${spamdbpath}/bayes" --progress "${junkfolder}"
-        sa-learn --sync
+        sa-learn --spam --dbpath "${spamdbpath}/bayes" "${junkfolder}" | \
+          while read line; do echo "sa_learn: $line"; done
+        sa-learn --sync | \
+          while read line; do echo "sa_learn: $line"; done
       else
         echo "sa_learn: No Junk folder found - skipping"
       fi
 
-      hamfolder="${dir}/.Archive"
+      hamfolder="${dir}/.Ham"
       if [ -d "${hamfolder}" ]; then
         echo "sa_learn: Learning Ham from ${hamfolder} for user ${mailaccount}"
-        sa-learn --ham --dbpath "${spamdbpath}/bayes" --progress "${hamfolder}"
-        sa-learn --sync
+        sa-learn --ham --dbpath "${spamdbpath}/bayes" --progress "${hamfolder}" | \
+          while read line; do echo "sa_learn: $line"; done
+        sa-learn --sync | \
+          while read line; do echo "sa_learn: $line"; done
       else
         echo "sa_learn: No Archive folder found - skipping"
       fi
