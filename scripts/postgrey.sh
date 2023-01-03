@@ -17,7 +17,8 @@ noop() {
 }
 
 if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then
-  exec /usr/sbin/postgrey --unix="${POSTGREY_SOCKET}"
+  exec /usr/sbin/postgrey --unix="${POSTGREY_SOCKET}" | \
+    while read line; do echo "postgrey: $line"; done
 else
   echo "INFO: Not running postgrey, since socket is disabled"
   noop
