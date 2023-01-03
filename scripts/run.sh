@@ -13,7 +13,6 @@ fi
 if [[ -n "${DKIM_SOCKET_PATH:-}" ]]; then
   echo "Spamass socket path set: ${DKIM_SOCKET_PATH}"
 fi
-echo_exec_banner
 
 # Ensuring the directories for the sockets exist (usually not necessary in prod)
 mkdir -p /var/spool/postfix/${POSTGREY_SOCKET_PATH%/*}
@@ -23,4 +22,8 @@ mkdir -p /var/spool/postfix/${DKIM_SOCKET_PATH%/*}
 # TODO: keep this in sync with the postfix user and group of the postfix docker container
 chown -R spamass-milter:spamass-milter /var/spool/postfix
 
+# Patch rsyslogd to disable kernel message logging
+sed 's/^module(load=\"imklog\".*)/#&/' -i.bak /etc/rsyslog.conf
+
+echo_exec_banner
 exec supervisord -c /etc/supervisord.conf
