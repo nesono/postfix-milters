@@ -51,10 +51,13 @@ Statistics              /dev/stdout
 # derived from the key's filename.
 #KeyList                /etc/dkim-keys.conf
 #
-# If enabled, will generate verification failure reports for any messages
-# that fail signature verification. These will be sent to the r= address
-# in the policy record, if any.
-ReportInfo             yes
+# If true, when a signature verification fails and the signature included
+# a reporting request ("r=y") and the signing domain advertises a
+# reporting address (i.e. ra=user) in a reporting record in the DNS, the
+# filter will send a structured report to that address containing details
+# needed to reproduce the problem.
+# See RFC6651 for a complete description of this mechanism.
+SendReports             yes
 #
 # If enabled, will issue a Sendmail QUARANTINE for any messages that fail
 # signature verification, allowing them to be inspected later.
