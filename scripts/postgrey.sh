@@ -4,7 +4,7 @@ set -o errexit -o pipefail -o nounset
 readonly POSTGREY_SOCKET="/var/spool/postfix/${POSTGREY_SOCKET_PATH:-}"
 
 cleanup() {
-  rm -rf ${POSTGREY_SOCKET}
+  rm -rf "${POSTGREY_SOCKET}"
 }
 trap cleanup EXIT
 
@@ -18,8 +18,8 @@ noop() {
 
 if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then
   /usr/sbin/postgrey --unix="${POSTGREY_SOCKET}" | \
-    while read line; do echo "postgrey: $line"; done
+    while read -r line; do echo "postgrey: $line"; done
 else
-  echo "INFO: Not running postgrey, since socket is disabled"
+  echo "INFO: Not running postgrey, since no socket path is set"
   noop
 fi

@@ -19,6 +19,7 @@ RUN mkdir -p /var/spool/postfix && \
     chown -R debian-spamd:debian-spamd /vhome/users
 
 # Add user spamass-milter to debian-spamd, to access the user spam databases below `/vhome`
+# - since spamass-milter is the same group as postfix in the postfix docker container
 RUN usermod -aG debian-spamd spamass-milter
 
 VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users", "/var/mail" ]
