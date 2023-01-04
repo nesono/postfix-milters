@@ -31,6 +31,12 @@ Please make sure to specify the socket path for the postgrey milter socket as an
 
 ### OPENDKIM Milter
 
+Create a DKIM txt and key file using the following command.
+
+```bash
+opendkim-genkey -t -s 2023-01-04 -d nesono.com,issing.link,noerpel.net,frankfriedbert.de,byorkesterbaritone.com
+```
+
 Please make sure to specify the socket path for the opendkim milter socket as an environment variable.
 
 * `DKIM_SOCKET_PATH`
