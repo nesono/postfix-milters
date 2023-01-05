@@ -50,3 +50,11 @@ to use the keys or copy the key in differently and point to it via the environme
 * (Optional) Volume: `/etc/opendkim/keys`
 * Environment variable: `DKIM_KEY_PATH`
 
+### OPENDMARC Milter
+
+Make sure to set the following environment variables.
+
+* `DMARC_SOCKET_PATH`, e.g. `private/dmarc`
+* `MAIL_HOSTNAME`, e.g. `smtp.nesono.com`
+
+Make sure you tell Postfix where to find the socket.
