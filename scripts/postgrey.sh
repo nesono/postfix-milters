@@ -4,7 +4,7 @@ set -o errexit -o pipefail -o nounset
 readonly POSTGREY_SOCKET="/var/spool/postfix/${POSTGREY_SOCKET_PATH:-}"
 
 cleanup() {
-  rm -rf "${POSTGREY_SOCKET}"
+  if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then rm -rf "${POSTGREY_SOCKET}"; fi
 }
 trap cleanup EXIT
 

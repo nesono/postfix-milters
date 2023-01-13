@@ -4,7 +4,7 @@ set -o errexit -o pipefail -o nounset
 readonly SPAMASS_SOCKET="/var/spool/postfix/${SPAMASS_SOCKET_PATH:-}"
 
 cleanup() {
-  rm -rf "${SPAMASS_SOCKET}"
+  if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then rm -rf "${SPAMASS_SOCKET}"; fi
 }
 trap cleanup EXIT
 
