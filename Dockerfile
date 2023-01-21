@@ -11,7 +11,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     opendmarc  \
     opendkim  \
     supervisor  \
-    netcat && \
+    netcat  \
+    miltertest && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/spool/postfix && \
@@ -27,5 +28,7 @@ VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users", "/var/mail"
 COPY scripts/* /scripts/
 COPY configs/* /etc/
 RUN chmod +x /scripts/*
+
+HEALTHCHECK  --interval=30s --timeout=5s --start-period=10s --retries=3 CMD /scripts/healthcheck.sh
 
 CMD [ "/bin/bash", "-c", "/scripts/run.sh" ]
