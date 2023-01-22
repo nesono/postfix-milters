@@ -12,6 +12,9 @@ noop() {
 }
 
 if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then
+  # Taken from /etc/init.d/spamassassin, including the comment below
+  export TMPDIR=/tmp
+  # Apparently people have trouble if this isn't explicitly set...
   /usr/sbin/spamd --max-children=5 -u debian-spamd --virtual-config-dir=/vhome/users/%u/spamassassin  | \
     while read -r line; do echo "spamd: $line"; done
 else

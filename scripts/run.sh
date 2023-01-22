@@ -48,6 +48,7 @@ if [[ -n "${DMARC_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/${DMARC_S
 
 # TODO: keep this in sync with the postfix user and group of the postfix docker container
 chown -R spamass-milter:spamass-milter /var/spool/postfix
+chown -R debian-spamd:debian-spamd /var/lib/spamass-milter
 
 echo_exec_banner
 exec supervisord -c /etc/supervisord.conf
