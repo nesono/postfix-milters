@@ -3,7 +3,7 @@
 socket_path = os.getenv("DMARC_SOCKET_PATH")
 if socket_path == nil then
     mt.echo("DMARC_SOCKET_PATH not set. Skipping")
-    os.exit()
+    os.exit(0)
 end
 
 conn = mt.connect("unix:/var/spool/postfix/" .. socket_path)

@@ -3,7 +3,7 @@
 socket_path = os.getenv("SPAMASS_SOCKET_PATH")
 if socket_path == nil then
     mt.echo("SPAMASS_SOCKET_PATH not set. Skipping")
-    os.exit()
+    os.exit(0)
 end
 
 conn = mt.connect("unix:/var/spool/postfix/" .. socket_path)
@@ -91,7 +91,8 @@ end
 if mt.eom(conn) ~= nil then
     error "mt.eom() failed"
 end
-if mt.getreply(conn) ~= SMFIR_ACCEPT then
+reply = mt.getreply(conn)
+if reply ~= SMFIR_ACCEPT and reply ~= SMFIR_CONTINUE then
     error "mt.eom() unexpected reply"
 end
 
