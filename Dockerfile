@@ -11,7 +11,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&  \
     opendmarc  \
     opendkim  \
     supervisor  \
-    netcat  \
+    netcat-traditional  \
     miltertest && \
     rm -rf /var/lib/apt/lists/*
 
