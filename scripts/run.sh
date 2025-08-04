@@ -41,13 +41,17 @@ EOF
 fi
 
 # Ensuring the directories for the sockets exist (usually not necessary in prod)
-if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/${POSTGREY_SOCKET_PATH%/*}; fi
-if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/${SPAMASS_SOCKET_PATH%/*}; fi
-if [[ -n "${DKIM_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/${DKIM_SOCKET_PATH%/*}; fi
-if [[ -n "${DMARC_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/${DMARC_SOCKET_PATH%/*}; fi
+if [[ -n "${POSTGREY_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/"${POSTGREY_SOCKET_PATH%/*}"; fi
+if [[ -n "${SPAMASS_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/"${SPAMASS_SOCKET_PATH%/*}"; fi
+if [[ -n "${DKIM_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/"${DKIM_SOCKET_PATH%/*}"; fi
+if [[ -n "${DMARC_SOCKET_PATH:-}" ]]; then mkdir -p /var/spool/postfix/"${DMARC_SOCKET_PATH%/*}"; fi
 
-# TODO: keep this in sync with the postfix user and group of the postfix docker container
-chown -R spamass-milter:spamass-milter /var/spool/postfix
+# syslog: 101:101
+# debian-spamd: 106:106
+# postfix in postfix docker container: 101:103
+#
+# Keep in sync with postfix uid
+chown -R syslog:opendkim /var/spool/postfix
 chown -R debian-spamd:debian-spamd /var/lib/spamass-milter
 
 echo_exec_banner

@@ -19,9 +19,16 @@ RUN mkdir -p /var/spool/postfix && \
     mkdir -p /vhome/users/ && \
     chown -R debian-spamd:debian-spamd /vhome/users
 
-# Add user spamass-milter to debian-spamd, to access the user spam databases below `/vhome`
-# - since spamass-milter is the same group as postfix in the postfix docker container
-RUN usermod -aG debian-spamd spamass-milter
+# Note that in scripts/run.sh are more dependencies
+# Postfix container: postfix u=101 g=103
+# This container: u(101)=spamass-milter g(103)=opendkim
+# This container: u(101)=syslog g(103)=opendkim
+#
+# KEEP ALL LINES IN  SYNC WITH THE TEXT "Keep in sync with the postfix uid"
+#
+# Add user syslog to debian-spamd, to access the user spam databases below `/vhome`
+# since syslog has the same uid as postfix in the postfix docker container
+RUN usermod -aG debian-spamd syslog
 
 # Make SpamAssassin more lenient with Date headers by disabling strict date rules
 RUN echo "" >> /etc/spamassassin/local.cf && \

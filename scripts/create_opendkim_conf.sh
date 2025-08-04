@@ -28,8 +28,8 @@ OversignHeaders		From
 KeyTable                refile:/etc/opendkim/KeyTable
 SigningTable            refile:/etc/opendkim/SigningTable
 
-# TODO: keep this in sync with the postfix uid
-UserID			spamass-milter
+# Keep in sync with postfix uid
+UserID			syslog
 UMask			007
 
 Socket			local:/var/spool/postfix/${DKIM_SOCKET_PATH}
