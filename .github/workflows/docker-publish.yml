@@ -8,6 +8,8 @@ name: Publish Docker Image
 on:
   release:
     types: [published]
+  pull_request:
+    branches: [ "main" ]
 
 env:
   # Use docker.io for Docker Hub if empty
