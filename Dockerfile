@@ -23,6 +23,12 @@ RUN mkdir -p /var/spool/postfix && \
 # - since spamass-milter is the same group as postfix in the postfix docker container
 RUN usermod -aG debian-spamd spamass-milter
 
+# Make SpamAssassin more lenient with Date headers by disabling strict date rules
+RUN echo "" >> /etc/spamassassin/local.cf && \
+    echo "# Disable strict Date header rules to allow emails from automated senders" >> /etc/spamassassin/local.cf && \
+    echo "score MISSING_DATE 0" >> /etc/spamassassin/local.cf && \
+    echo "score INVALID_DATE 0" >> /etc/spamassassin/local.cf
+
 VOLUME [ "/var/spool/postfix", "/etc/opendkim/keys", "/vhome/users", "/var/mail" ]
 
 COPY scripts/* /scripts/
